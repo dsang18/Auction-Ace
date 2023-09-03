@@ -1,9 +1,10 @@
 // import Image from 'next/image'
-import SignUp from './SignUp'
-
+import SignIn from './SignIn';
+import SignUp from './SignUp';
+import Homepage from './Homepage';
 
 export default function Home() {
   return (
-    <SignUp/>
+    <Homepage/>
   )
 }
