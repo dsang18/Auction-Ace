@@ -1,10 +1,16 @@
 // import Image from 'next/image'
-import SignIn from './SignIn';
-import SignUp from './SignUp';
-import Homepage from './Homepage';
+import HomeCategories from './components/HomeCategories';
+import HomeImage from './components/HomeImage';
+import LiveAuction from './components/LiveAuction';
+import Reviews from './components/Reviews';
 
 export default function Home() {
   return (
-    <Homepage/>
+   <div>
+      <HomeImage/>
+      <HomeCategories/>
+      <LiveAuction/>
+      <Reviews/>
+   </div>
   )
 }
