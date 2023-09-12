@@ -1,5 +1,4 @@
 import React from 'react';
-import Logo from '../components/Logo';
 import {BsPerson} from 'react-icons/bs';
 import {BiPhone} from 'react-icons/bi';
 import {AiOutlineMail,AiOutlineLock} from 'react-icons/ai';
