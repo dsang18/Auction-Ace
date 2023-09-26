@@ -2,15 +2,17 @@
 import HomeCategories from './components/HomeCategories';
 import HomeImage from './components/HomeImage';
 import LiveAuction from './components/LiveAuction';
-import Reviews from './components/Reviews';
+import Reviews from './single_product/components/Reviews';
+import Navbar from './components/Navbar';
 
 export default function Home() {
-  return (
-   <div>
-      <HomeImage/>
-      <HomeCategories/>
-      <LiveAuction/>
-      <Reviews/>
-   </div>
-  )
+    return (
+        <div>
+            <Navbar />
+            <HomeImage />
+            <HomeCategories />
+            <LiveAuction />
+            <Reviews />
+        </div>
+    );
 }
