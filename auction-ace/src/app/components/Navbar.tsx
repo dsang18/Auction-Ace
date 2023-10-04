@@ -12,6 +12,14 @@ export default function Navbar() {
   const [loggedIn, setloggedIn] = useState(true)
   const [MenuOpen, setMenuOpen] = useState(false)
 
+  const profileMenu = <div className="absolute top-12 right-0 z-10 mt-2 w-80  rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" >
+  <a href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" id="user-menu-item-0">Your Profile</a>
+  <a href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" id="user-menu-item-1">Dashboard</a>
+  <a href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" id="user-menu-item-2">Sign out</a>
+</div>
+
+
+
   return (
     <div className='flex items-center justify-around flex-row bg-[#FFFDFB] absolute w-screen md:w-full z-10'>
       <Logo/> 
@@ -25,16 +33,7 @@ export default function Navbar() {
         <div className='flex items-center justify-end  md:w-1/5'>
             <CgProfile className='text-4xl cursor-pointer' onClick={()=>{setMenuOpen(!MenuOpen)}}/>
 
-            {(MenuOpen)?
-            <div className="absolute top-12 right-0 z-10 mt-2 w-80  rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" >
-            <a href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" id="user-menu-item-0">Your Profile</a>
-            <a href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" id="user-menu-item-1">Dashboard</a>
-            <a href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" id="user-menu-item-2">Sign out</a>
-          </div>
-          :
-          <div>
-          </div>
-          }
+            {(MenuOpen)? profileMenu:<div></div>}
         </div>
 
 
