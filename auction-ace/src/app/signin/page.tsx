@@ -49,7 +49,7 @@ export default function SignIn() {
                         </Link>
                     </form>
                     <h3 className="font-thin text-center">
-                        New User? <Link href="" className='underline'>Sign Up here</Link>
+                        New User? <Link href="/signup" className='underline'>Sign Up here</Link>
                     </h3>
                 </div>
             </div>

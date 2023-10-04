@@ -2,6 +2,7 @@ import React from 'react';
 import {BsPerson} from 'react-icons/bs';
 import {BiPhone} from 'react-icons/bi';
 import {AiOutlineMail,AiOutlineLock} from 'react-icons/ai';
+import Link from 'next/link';
 
 
 export default function SignUp() {
@@ -12,7 +13,7 @@ export default function SignUp() {
 
         {/* Sign up form heading */}
         <h3 className='text-3xl'>Sign Up</h3>
-        <h3 className='text-md'>Already Registered? <a>Login here</a></h3>
+        <h3 className='text-md'>Already Registered? <Link href="/signin" className='underline'>Login here</Link></h3>
 
         {/* sign up form */}
         <form className='flex items-center justify-around flex-col w-full p-4'>
