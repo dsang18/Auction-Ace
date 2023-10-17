@@ -1,7 +1,7 @@
 'use client';
 
 // Layout Components
-import Navbar from '../components/Navbar';
+// import Navbar from '../components/Navbar';
 import Jumbotron from '../components/Jumbotron';
 
 // Section Components
@@ -21,10 +21,10 @@ export default function page() {
 
     return (
         <main>
-            <Navbar />
+            {/* <Navbar /> */}
             <Jumbotron
-                section_name1={displayComponent}
-                section_name2={displayComponent}
+                section_name1={"Dashboard"}
+                section_name2={"displayComponent"}
             />
 
             <div className="flex items-center justify-around w-full flex-wrap">
@@ -53,12 +53,12 @@ export default function page() {
                     Purchases
                 </button>
             </div>
-
+           
             {/* Conditionally Rendering Components */}
             {displayComponent === 'Dashboard' && <Dashboard />}
             {displayComponent === 'Profile' && <Profile />}
             {displayComponent === 'Order Bidding' && <OrderBidding />}
-            {displayComponent === 'Purchases' && <AllPurchases />}
+            {displayComponent === 'Purchases' && <AllPurchases />} 
         </main>
     );
 }
