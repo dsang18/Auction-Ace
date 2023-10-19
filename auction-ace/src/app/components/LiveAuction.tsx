@@ -35,7 +35,9 @@ export default async function LiveAuction() {
     // const itemDetails = await prisma.item.findMany({
     //     take: 4
     // })
-    
+
+    const itemDetails = await prisma.item.findMany({ take: 10 })
+
     return (
         <div className="my-4" id="LiveAuction">
             <div>
@@ -47,7 +49,7 @@ export default async function LiveAuction() {
             </div>
             {/* live auction main container */}
             <div className="grid place-items-center justify-items-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-6 p-3 w-full">
-                {/* {await itemDetails.map((item) => (
+                {itemDetails.map((item) => (
                     <Link href={'/single_product'} key={item.id}>
                         <LiveAuctionSingleProduct
                             name={item.itemName}
@@ -55,8 +57,8 @@ export default async function LiveAuction() {
                             price={item.initialBid}
                         ></LiveAuctionSingleProduct>
                     </Link>
-                ))} */}
-                {prod_details.map((item)=>(
+                ))}
+                {/* {prod_details.map((item)=>(
                     <Link href={'/single_product'} key={item.id}>
                         <LiveAuctionSingleProduct
                             name={item.prod_name}
@@ -64,7 +66,7 @@ export default async function LiveAuction() {
                             price={item.prod_bid_price}
                         ></LiveAuctionSingleProduct>
                     </Link>
-                ))}
+                ))} */}
             </div>
             <div id="ViewMoreDiv"></div>
             <div className="flex items-center justify-center w-full pb-4">
