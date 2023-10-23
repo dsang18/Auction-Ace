@@ -1,7 +1,7 @@
 import HomeCategories from '../components/HomeCategories';
 import HomeImage from '../components/HomeImage';
 import LiveAuction from '../components/LiveAuction';
-import Reviews from '../single_product/components/Reviews';
+import Reviews from '../components/Reviews';
 import Link from 'next/link';
 
 export default function Home() {

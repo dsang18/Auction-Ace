@@ -7,6 +7,7 @@ import Dashboard from './Dashboard';
 import Profile from './Profile';
 import OrderBidding from './OrderBidding';
 import AllPurchases from './AllPurchases';
+import Jumbotron from '@/app/components/Jumbotron';
 
 export default function ComponentTree() {
     const [displayComponent, setDisplayComponent] = useState('Dashboard');
@@ -17,6 +18,10 @@ export default function ComponentTree() {
 
     return (
         <section>
+            <Jumbotron
+                section_name1={'Dashboard'}
+                section_name2={displayComponent}
+            />
             <div className="flex items-center justify-around w-full flex-wrap">
                 <button
                     className={

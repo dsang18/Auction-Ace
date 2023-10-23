@@ -1,17 +1,20 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import Auction from "../../../public/USPA_white_shoes.png"
 
 type Props = {
     name: string;
     image: string;
     price: number;
+    desc: string;
 };
 
 export default function LiveAuctionSingleProduct(props: Props) {
     return (
         <div className="flex items-start m-3 border border-gray-300 rounded-md flex-col w-full">
             <Image
-                src={props.image}
+                // src="/_next/static/media/USPA_white_shoes.77c6ce22.png"
+                src="/auction.png"
                 alt="Shoes"
                 className="rounded-sm"
                 width={500}
