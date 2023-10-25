@@ -1,8 +1,10 @@
+
 import './globals.css';
 import type { Metadata } from 'next';
 import { Maven_Pro } from 'next/font/google';
 import Link from 'next/link';
-// import KindeNavbar from './components/KindeNavbar';
+import KindeNavbar from './components/KindeNavbar';
+import Navbar from './components/Navbar';
 
 // Importing Kinde Components
 import {
@@ -19,18 +21,18 @@ export const metadata: Metadata = {
     description: 'Online auction system',
 };
 
-export default function RootLayout({
+export default  function RootLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
-    const { isAuthenticated, getUser } = getKindeServerSession();
-    const user = getUser();
+    // const { isAuthenticated, getUser } = getKindeServerSession();
+    // const user =  getUser();
     return (
         <html lang="en">
             <body className={maven_pro.className}>
                 <header>
-                    <nav className="nav container">
+                    {/* <nav className="nav container">
                         <Link href={"/"} className="text-display-3">AuctionAce</Link>
                         <div>
                             {!isAuthenticated() ? (
@@ -70,10 +72,10 @@ export default function RootLayout({
                                 </div>
                             )}
                         </div>
-                    </nav>
+                    </nav> */}
                 </header>
                 <main>
-                    {/* <KindeNavbar /> */}
+                    <KindeNavbar />
                     {children}
                 </main>
             </body>

@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 // Section Components
 import Dashboard from './Dashboard';
-import Profile from './Profile';
+import AddProduct from './AddProduct';
 import OrderBidding from './OrderBidding';
 import AllPurchases from './AllPurchases';
 import Jumbotron from '@/app/components/Jumbotron';
@@ -35,13 +35,13 @@ export default function ComponentTree() {
                 </button>
                 <button
                     className={
-                        displayComponent === 'Profile'
+                        displayComponent === 'Sell Product'
                             ? `bg-amber-400 text-white border-0 text-md px-2 py-1 text-center text-lg rounded-lg my-2 w-2/5 lg:m-2 lg:w-1/5`
                             : `text-md bg-slate-50 border-[1.5px] border-gray-500 px-2 py-1 text-center text-lg rounded-lg my-2 w-2/5 lg:m-2 lg:w-1/5`
                     }
-                    onClick={() => handleButtonClick('Profile')}
+                    onClick={() => handleButtonClick('Sell Product')}
                 >
-                    My Profile
+                    Sell Product
                 </button>
                 <button
                     className={
@@ -67,7 +67,7 @@ export default function ComponentTree() {
 
             {/* Conditionally Rendering Components */}
             {displayComponent === 'Dashboard' && <Dashboard />}
-            {displayComponent === 'Profile' && <Profile />}
+            {displayComponent === 'Sell Product' && <AddProduct />}
             {displayComponent === 'Order Bidding' && <OrderBidding />}
             {displayComponent === 'Purchases' && <AllPurchases />}
         </section>
