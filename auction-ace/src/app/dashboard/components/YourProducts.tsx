@@ -1,6 +1,17 @@
 import React from 'react';
+import prisma from '@/lib/prisma';
 
-export default function OrderBidding() {
+type Props = {
+    userId: string;
+}
+
+export default async function OrderBidding(props: Props) {
+    const products = await prisma.item.findMany({
+        where: {
+            sellerId: props.userId
+        }
+    })
+
     return (
         <section>
             <div className="flex items-center justify-center w-full p-2">

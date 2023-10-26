@@ -1,17 +1,23 @@
 // import Navbar from '../components/Navbar';
 import ComponentTree from './components/ComponentTree';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
-import { redirect } from 'next/navigation'
+import { redirect } from 'next/navigation';
 
 export default async function SellerDashboard() {
-    const { getPermission } = getKindeServerSession();
-
+    const { getUser, getPermission } = getKindeServerSession();
+    const user = await getUser();
+    if (user.given_name === null || user.id === null) {
+        throw new Error('Something Went Wrong! Please try again');
+    }
     return (
         <>
-            {await getPermission("dashboard:access").isGranted ? (
+            {(await getPermission('dashboard:access').isGranted) ? (
                 <main>
                     {/* <Navbar /> */}
-                    <ComponentTree />                    
+                    <ComponentTree
+                        userId={user.id}
+                        userName={user.given_name+" "+user.family_name}
+                    />
                 </main>
             ) : (
                 // alert("You don't have access to Dashboard")

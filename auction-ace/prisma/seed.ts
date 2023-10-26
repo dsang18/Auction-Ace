@@ -16,7 +16,7 @@ async function main() {
                 initialBid: 4500.00,
                 AuctionEndTime: new Date('2023-10-28T11:00:59Z'),
                 seller: 'USPA Distributor',
-                sellerId: 0,
+                sellerId: "0",
             },
             {
                 itemName: 'Nike Shoes',
@@ -26,7 +26,7 @@ async function main() {
                 initialBid: 6500.00,
                 AuctionEndTime: new Date('2023-10-29T11:00:59Z'),
                 seller: 'Nike Distributor',
-                sellerId: 0,
+                sellerId: "0",
             },
             {
                 itemName: 'Nike Black Shoes',
@@ -36,7 +36,7 @@ async function main() {
                 initialBid: 7500.00,
                 AuctionEndTime: new Date('2023-10-30T11:00:59Z'),
                 seller: 'Nike Distributor',
-                sellerId: 0,
+                sellerId: "0",
             },
             {
                 itemName: 'Adidas Shoes',
@@ -46,7 +46,7 @@ async function main() {
                 initialBid: 5500.00,
                 AuctionEndTime: new Date('2023-10-26T11:00:59Z'),
                 seller: 'Adidas Distributor',
-                sellerId: 0,
+                sellerId: "0",
             },
             {
                 itemName: 'Puma Shoes',
@@ -56,7 +56,7 @@ async function main() {
                 initialBid: 3500.00,
                 AuctionEndTime: new Date('2023-10-25T11:00:59Z'),
                 seller: 'Puma Distributor',
-                sellerId: 0,
+                sellerId: "0",
             },
             {
                 itemName: 'Redtape Shoes',
@@ -66,7 +66,7 @@ async function main() {
                 initialBid: 2500.00,
                 AuctionEndTime: new Date('2023-11-01T11:00:59Z'),
                 seller: 'Redtape Distributor',
-                sellerId: 0,
+                sellerId: "0",
             },
         ],
     });

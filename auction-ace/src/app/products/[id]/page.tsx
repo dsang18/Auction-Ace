@@ -15,6 +15,9 @@ export default async function Products({ params: { id } }: Params) {
             id: id,
         },
     });
+    if (prodDetails === null) {
+        throw new Error("Something Went Wrong! Please try again")
+    }
     return (
         <div className="w-screen h-screen overflow-x-hidden">
             {/* <Navbar /> */}
@@ -23,10 +26,11 @@ export default async function Products({ params: { id } }: Params) {
                 section_name2={prodDetails?.itemName}
             />
             <Product_Details
-                name={prodDetails?.itemName}
-                seller={prodDetails?.seller}
-                price={prodDetails?.initialBid}
-                desc={prodDetails?.description}
+                prodId={id}
+                name={prodDetails.itemName}
+                seller={prodDetails.seller}
+                price={prodDetails.initialBid}
+                desc={prodDetails.description}
             />
         </div>
     );

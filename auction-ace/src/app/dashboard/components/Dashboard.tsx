@@ -5,7 +5,11 @@ import { FiCheckCircle } from 'react-icons/fi';
 
 import React from 'react';
 
-export default function Dashboard() {
+type Props = {
+    userId: string;
+}
+
+export default function Dashboard(props: Props) {
     return (
         <section>
             {/* <Section section_name1={'Dashboard'} section_name2={'dashboard'} /> */}

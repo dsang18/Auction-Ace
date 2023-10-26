@@ -5,11 +5,17 @@ import React, { useState } from 'react';
 // Section Components
 import Dashboard from './Dashboard';
 import AddProduct from './AddProduct';
-import OrderBidding from './OrderBidding';
+import OrderBidding from './YourProducts';
 import AllPurchases from './AllPurchases';
 import Jumbotron from '@/app/components/Jumbotron';
 
-export default function ComponentTree() {
+
+type Props = {
+    userId:string;
+    userName:string;
+}
+
+export default function ComponentTree(props: Props) {
     const [displayComponent, setDisplayComponent] = useState('Dashboard');
 
     const handleButtonClick = (display: string) => {
@@ -66,10 +72,10 @@ export default function ComponentTree() {
             </div>
 
             {/* Conditionally Rendering Components */}
-            {displayComponent === 'Dashboard' && <Dashboard />}
-            {displayComponent === 'Sell Product' && <AddProduct />}
-            {displayComponent === 'Order Bidding' && <OrderBidding />}
-            {displayComponent === 'Purchases' && <AllPurchases />}
+            {displayComponent === 'Dashboard' && <Dashboard userId={props.userId} />}
+            {displayComponent === 'Sell Product' && <AddProduct userId={props.userId} userName={props.userName} />}
+            {displayComponent === 'Order Bidding' && <OrderBidding userId={props.userId} />}
+            {displayComponent === 'Purchases' && <AllPurchases userId={props.userId} />}
         </section>
     );
 }

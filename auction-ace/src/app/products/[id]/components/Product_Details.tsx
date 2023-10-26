@@ -1,18 +1,24 @@
 import prod_img1 from 'public/USPA_white_shoes.png';
 import Image from 'next/image';
 import Reviews from '../../../components/Reviews';
+import BidForm from './BidForm';
+import Link from 'next/link';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 
 type Props = {
-    name: string | undefined;
-    seller: string | undefined;
-    price: number | undefined;
-    desc: string | undefined;
+    prodId: string;
+    name: string;
+    seller: string;
+    price: number;
+    desc: string;
 };
 
 export default async function Product_Details(props: Props) {
-    const { getPermission } = getKindeServerSession();
-
+    const { getUser, getPermission } = getKindeServerSession();
+    const user = await getUser();
+    if (user.given_name === null || user.id === null) {
+        throw new Error('Something Went Wrong! Please try again');
+    }
     return (
         <div className="flex items-center justify-center p-2 flex-wrap w-full md:justify-start">
             <div className="flex items-center justify-between p-2 w-full md:w-1/2">
@@ -41,7 +47,7 @@ export default async function Product_Details(props: Props) {
             </div>
 
             {/* product description container */}
-            <div className="flex items-center justify-center flex-col w-full sm:w-4/5 md:w-1/2 lg:w-2/5 md:px-2">
+            <div className="flex justify-center flex-col w-full sm:w-4/5 md:w-1/2 lg:w-2/5 md:px-2">
                 <p className="w-full text-xl text-gray-900 font-semibold">
                     {props.name}
                 </p>
@@ -49,9 +55,15 @@ export default async function Product_Details(props: Props) {
                 <p className="w-full text-sm text-gray-900 text-justify line-clamp-2">
                     {props.desc}
                 </p>
+                <Link
+                    href={'#description'}
+                    className="underline font-extralight text-sm text-gray-700 hover:text-black"
+                >
+                    Know More
+                </Link>
                 <p className="w-full text-xl text-gray-900 text-center my-2">
-                    Bidding Price:{' '}
-                    <span className="font-semibold">₹{props.price}</span>
+                    Bidding Price:
+                    <span className="ml-2 font-semibold">₹{props.price}</span>
                 </p>
 
                 {/* Bid now container */}
@@ -64,28 +76,21 @@ export default async function Product_Details(props: Props) {
                     </p>
                     <hr className="w-1/3 bg-gray-900 my-4 h-[0.1rem]"></hr>
 
-                    <form className="flex items-center justify-around w-full p-1">
-                        <input
-                            className="bg-gray-300 text-gay-600 px-2 py-1 text-lg rounded-lg w-2/3"
-                            placeholder="₹00.00"
-                        ></input>
-                        {await getPermission("dashboard:access").isGranted ? (
-                            <button disabled className="bg-[#e3af46] px-2 py-1 text-center text-lg rounded-lg w-1/3 mx-2 font-semibold">
-                                {' '}
-                                Place Bid
-                            </button>
-                        ) : (
-                            <button className="bg-[#e3af46] px-2 py-1 text-center text-lg rounded-lg w-1/3 mx-2 font-semibold">
-                                {' '}
-                                Place Bid
-                            </button>
-                        )}
-                    </form>
+                    <BidForm
+                        access={getPermission('dashboard:access').isGranted}
+                        userId={user.id}
+                        userName={user.given_name}
+                        prodId={props.prodId}
+                        price={props.price}
+                    />
                 </div>
             </div>
 
             {/* Description and bidding history buttons */}
-            <div className="flex items-start justify-start w-full flex-col">
+            <div
+                id="description"
+                className="flex items-start justify-start w-full flex-col"
+            >
                 <div className="flex items-start justify-around w-full lg:w-1/3">
                     <button className="bg-[#e3af46] py-1 text-center text-lg rounded-md px-4">
                         Description

@@ -1,6 +1,10 @@
 import React from 'react';
 
-export default function AllPurchases() {
+type Props = {
+    userId: string;
+}
+
+export default function AllPurchases(props: Props) {
     return (
         <section>
             <div className="flex items-center justify-center w-full p-2">
