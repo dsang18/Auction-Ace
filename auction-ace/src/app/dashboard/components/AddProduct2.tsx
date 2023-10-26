@@ -1,16 +1,16 @@
 import { useState } from "react"
 // import axios from 'axios';
-// import fs from 'fs';
+// // import fs from 'fs';
 
 
 
-// export default function AddProduct() {
-//     const [Name, setName] = useState("")
-//     const [Desc, setDesc] = useState("")
-//     const [MinBid, setMinBid] = useState('')
-//     const [BidEndTime, setBidEndTime] = useState('')
-//     const [SelectedImage, setSelectedImage] = useState("")
-//     const [SelectedFile, setSelectedFile] = useState<File>()
+// // export default function AddProduct() {
+// //     const [Name, setName] = useState("")
+// //     const [Desc, setDesc] = useState("")
+// //     const [MinBid, setMinBid] = useState('')
+// //     const [BidEndTime, setBidEndTime] = useState('')
+// //     const [SelectedImage, setSelectedImage] = useState("")
+// //     const [SelectedFile, setSelectedFile] = useState<File>()
 
 
 // const handleForm = async ()=>{
@@ -94,7 +94,7 @@ export default function AddProduct(props: Props) {
 
                     {/* sign up form */}
                     {/* <form className="w-full px-4" 
-                    // onSubmit={handleForm}
+                    onSubmit={handleForm}
                     > */}
                         
 
@@ -162,54 +162,6 @@ export default function AddProduct(props: Props) {
                                     ></input>
                                 </div>
                             </div> */}
-
-                            <label className="text-md w-full">
-                                Product Name
-                                <input
-                                    type="text"
-                                    className="w-full pr-1 pl-7 py-1 text-md border-[1.5px] border-[#938f8f] rounded-md"
-                                    placeholder="Product Name"
-                                    {...register('prodName')}
-                                />
-                            </label>
-                            {errors.prodName?.message && (
-                                <p className="text-sm text-red-400">
-                                    {errors.prodName.message}
-                                </p>
-                            )}
-
-                            {/* inputs for Product Description */}
-                            <label className="text-md w-full mt-6">
-                                Product Description
-                                <textarea
-                                    className="pr-1 pl-7 py-1 text-md border-[1.5px] border-[#938f8f] rounded-md w-full"
-                                    placeholder="Product Description"
-                                    {...register('description')}
-                                />
-                            </label>
-                            {errors.description?.message && (
-                                <p className="text-sm text-red-400">
-                                    {errors.description.message}
-                                </p>
-                            )}
-
-                            {/* input for Minimum Bid */}
-                            <label className="text-md w-full mt-6">
-                                Start Bid Amount
-                                <input
-                                    type="number"
-                                    className="pr-1 pl-7 py-1 text-md border-[1.5px] border-[#938f8f] rounded-md w-full"
-                                    placeholder="Minimum Bid"
-                                    {...register('price', {
-                                        valueAsNumber: true,
-                                    })}
-                                />
-                            </label>
-                            {errors.price?.message && (
-                                <p className="text-sm text-red-400">
-                                    {errors.price.message}
-                                </p>
-                            )}
 
                             <label className="text-md w-full mt-6">
                                 Bid End Time

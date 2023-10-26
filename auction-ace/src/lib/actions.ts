@@ -45,7 +45,6 @@ export async function addProduct(data: AddProductInput) {
                 sellerId: result.data.sellerId, 
             }
         })
-        console.log(result.data);
         revalidatePath('/products')
         return { success: true, data: result.data };
     }
