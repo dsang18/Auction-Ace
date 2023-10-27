@@ -26,7 +26,9 @@ export const AddProductFormDataSchema = z.object({
     }),
     images: z.string({
         invalid_type_error: 'typeError: ImageName must be string',
+        required_error: "You need to add an Image"
     }),
+    // image: z.instanceof(File),
     price: z.number({
         invalid_type_error: 'typeError: price must be number',
     }),

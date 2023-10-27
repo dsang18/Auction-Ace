@@ -1,8 +1,6 @@
-import { useState } from "react"
-// import axios from 'axios';
+import { LegacyRef, useState } from 'react';
+import axios from 'axios';
 // import fs from 'fs';
-
-
 
 // export default function AddProduct() {
 //     const [Name, setName] = useState("")
@@ -11,7 +9,6 @@ import { useState } from "react"
 //     const [BidEndTime, setBidEndTime] = useState('')
 //     const [SelectedImage, setSelectedImage] = useState("")
 //     const [SelectedFile, setSelectedFile] = useState<File>()
-
 
 // const handleForm = async ()=>{
 //     try{
@@ -23,10 +20,9 @@ import { useState } from "react"
 //         formData.set("minimumBid", MinBid)
 //         formData.set("BidEndTime", BidEndTime)
 //         console.log(formData)
-        
+
 //         const {data} = await axios.post("/api/uploadData", formData)
-        
-    
+
 //         // console.log(data)
 //     }
 //     catch(error: any){
@@ -34,7 +30,6 @@ import { useState } from "react"
 //     }
 
 // }
-
 
 //   return (
 //     <section>
@@ -56,6 +51,7 @@ type AddProductInput = z.infer<typeof AddProductFormDataSchema>;
 
 export default function AddProduct(props: Props) {
     const [success, setSuccess] = useState(false);
+    const [SelectedFile, setSelectedFile] = useState<File>();
 
     const {
         register,
@@ -67,7 +63,50 @@ export default function AddProduct(props: Props) {
         resolver: zodResolver(AddProductFormDataSchema),
     });
 
+    const customOnChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {  
+        if (event.target.files) {
+            const file = event.target.files[0];
+
+            setSelectedFile(file);
+        }
+    };
+    
+    const inputRef = register('images', {
+        onChange: customOnChangeHandler,
+    });
+
+    const uploadImageToCloudinary = (file: any) => {
+        // Create a FormData object to store the file and other upload parameters
+
+        const formData = new FormData();
+
+        formData.append('file', file);
+
+        // Add the Cloudinary upload preset to the FormData object
+
+        formData.append('upload_preset', 'n1hcccvb');
+
+        formData.append('folder', 'AuctionAce');
+
+        // const UPLOAD_URL = `https://${process.env.CLOUDINARY_API_SECRET}:${process.env.CLOUDINARY_API_KEY}@api.cloudinary.com/v1_1/${process.env.CLOUDINARY_CLOUD_NAME}/upload`;
+
+        const UPLOAD_URL = `https://bBERTT2zFbCI-5a8Kaarun3XuOQ:375535683849763@api.cloudinary.com/v1_1/drv5m7snk/upload`;
+
+
+        // Make a POST request to the Cloudinary upload URL with the FormData object
+
+        return axios.post(UPLOAD_URL, formData).then((response) => {
+            return response.data.secure_url;
+        });
+    };
+
     const processForm: SubmitHandler<AddProductInput> = async (data) => {
+        const image_url = await uploadImageToCloudinary(SelectedFile);
+
+        console.log(image_url);
+
+        data.images = image_url
+
         const result = await addProduct(data);
 
         if (!result) {
@@ -96,7 +135,6 @@ export default function AddProduct(props: Props) {
                     {/* <form className="w-full px-4" 
                     // onSubmit={handleForm}
                     > */}
-                        
 
                     <form
                         onSubmit={handleSubmit(processForm)}
@@ -107,8 +145,8 @@ export default function AddProduct(props: Props) {
                             className="flex items-center justify-around flex-col w-100 p-4 disabled:opacity-70"
                         >
                             {/* inputs for Product Name */}
-                            
-                                {/* <div className="flex items-start justify-start flex-col w-full md:w-full md:px-2">
+
+                            {/* <div className="flex items-start justify-start flex-col w-full md:w-full md:px-2">
                                     <label className="text-md w-full">
                                         Product Name
                                     </label>
@@ -124,11 +162,10 @@ export default function AddProduct(props: Props) {
                                         ></input>
                                     </div>
                                 </div> */}
-                            
 
                             {/* inputs for Product Description */}
-                            
-                                {/* <div className="flex items-start justify-start flex-col w-full md:w-full md:px-2">
+
+                            {/* <div className="flex items-start justify-start flex-col w-full md:w-full md:px-2">
                                     <label className="text-md">Product Description</label>
                                     <div className="relative flex items-center w-full">
                                         <textarea
@@ -141,9 +178,6 @@ export default function AddProduct(props: Props) {
                                         ></textarea>
                                     </div>
                                 </div> */}
-                            
-
-                           
 
                             {/* input for Minimum Bid */}
                             {/* <div className="flex items-start justify-start flex-col w-full md:px-2 ">
@@ -262,11 +296,21 @@ export default function AddProduct(props: Props) {
                                     placeholder="Image"
                                     {...register('images')}
                                 /> */}
-                                <input
+                                {/* <input
                                     type="text"
                                     className="w-full pr-1 pl-7 py-1 text-md border-[1.5px] border-[#938f8f] rounded-md"
                                     placeholder="Image Path"
                                     {...register('images')}
+                                /> */}
+                                <input
+                                    type="file"
+                                    className="pr-1 pl-7 py-1 text-md border-[1.5px] border-[#938f8f] rounded-md w-full"
+                                    // name="prodImage"
+                                    placeholder="Image"
+                                    accept='image/*'
+                                    // @ts-ignore
+                                    ref={inputRef}
+                                    name="images"
                                 />
                             </label>
                             {errors.images?.message && (

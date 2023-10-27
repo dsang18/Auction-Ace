@@ -16,7 +16,7 @@ type Props = {
 export default async function Product_Details(props: Props) {
     const { getUser, getPermission } = getKindeServerSession();
     const user = await getUser();
-    if (user.given_name === null || user.id === null) {
+    if (user.given_name === null || user.id === null || user.family_name === null) {
         throw new Error('Something Went Wrong! Please try again');
     }
     return (
@@ -79,7 +79,7 @@ export default async function Product_Details(props: Props) {
                     <BidForm
                         access={getPermission('dashboard:access').isGranted}
                         userId={user.id}
-                        userName={user.given_name}
+                        userName={user.given_name+" "+user.family_name}
                         prodId={props.prodId}
                         price={props.price}
                     />
