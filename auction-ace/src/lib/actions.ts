@@ -3,11 +3,11 @@
 import { z } from 'zod';
 import prisma from './prisma';
 import { revalidatePath } from 'next/cache';
-import { BidFormDataSchema, AddProductFormDataSchema } from './zodSchema';
+import { BidFormDataSchema, AddProductFormDataSchemaServer } from './zodSchema';
 
 type Inputs = z.infer<typeof BidFormDataSchema>;
 
-type AddProductInput = z.infer<typeof AddProductFormDataSchema>;
+type AddProductInput = z.infer<typeof AddProductFormDataSchemaServer>;
 
 export async function addEntry(data: Inputs) {
     const result = BidFormDataSchema.safeParse(data);
@@ -31,7 +31,7 @@ export async function addEntry(data: Inputs) {
 }
 
 export async function addProduct(data: AddProductInput) {
-    const result = AddProductFormDataSchema.safeParse(data);
+    const result = AddProductFormDataSchemaServer.safeParse(data);
 
     if (result.success) {
         await prisma.item.create({
@@ -46,10 +46,12 @@ export async function addProduct(data: AddProductInput) {
             }
         })
         revalidatePath('/products')
+        console.log("Successful in adding product");
         return { success: true, data: result.data };
     }
 
     if (result.error) {
+        console.log("Failed to add product");
         return { success: false, error: result.error.format() };
     }
 }

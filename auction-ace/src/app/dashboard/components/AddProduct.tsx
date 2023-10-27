@@ -39,7 +39,7 @@ import axios from 'axios';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { AddProductFormDataSchema } from '@/lib/zodSchema';
+import { AddProductFormDataSchemaClient } from '@/lib/zodSchema';
 import { addProduct } from '@/lib/actions';
 
 type Props = {
@@ -47,7 +47,7 @@ type Props = {
     userName: string;
 };
 
-type AddProductInput = z.infer<typeof AddProductFormDataSchema>;
+type AddProductInput = z.infer<typeof AddProductFormDataSchemaClient>;
 
 export default function AddProduct(props: Props) {
     const [success, setSuccess] = useState(false);
@@ -60,20 +60,26 @@ export default function AddProduct(props: Props) {
         reset,
         formState: { errors },
     } = useForm<AddProductInput>({
-        resolver: zodResolver(AddProductFormDataSchema),
+        // resolver: zodResolver(AddProductFormDataSchemaClient),
     });
 
-    const customOnChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {  
+    const customOnChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+        console.log("Entered CustomOnchange");
+          
         if (event.target.files) {
+            console.log("Entered If");
+            
             const file = event.target.files[0];
 
             setSelectedFile(file);
+            console.log(SelectedFile);
         }
+        console.log("End of CustomOnChange");
     };
     
-    const inputRef = register('images', {
-        onChange: customOnChangeHandler,
-    });
+    // const inputRef = register('images', {
+    //     onChange: customOnChangeHandler,
+    // });
 
     const uploadImageToCloudinary = (file: any) => {
         // Create a FormData object to store the file and other upload parameters
@@ -107,6 +113,7 @@ export default function AddProduct(props: Props) {
 
         data.images = image_url
 
+        // @ts-ignore
         const result = await addProduct(data);
 
         if (!result) {
@@ -302,7 +309,7 @@ export default function AddProduct(props: Props) {
                                     placeholder="Image Path"
                                     {...register('images')}
                                 /> */}
-                                <input
+                                {/* <input
                                     type="file"
                                     className="pr-1 pl-7 py-1 text-md border-[1.5px] border-[#938f8f] rounded-md w-full"
                                     // name="prodImage"
@@ -311,11 +318,19 @@ export default function AddProduct(props: Props) {
                                     // @ts-ignore
                                     ref={inputRef}
                                     name="images"
+                                /> */}
+                                <input
+                                    type="file"
+                                    className="pr-1 pl-7 py-1 text-md border-[1.5px] border-[#938f8f] rounded-md w-full"
+                                    // name="prodImage"
+                                    placeholder="Image"
+                                    {...register('images')}
+                                    onChange={customOnChangeHandler}
                                 />
                             </label>
                             {errors.images?.message && (
                                 <p className="text-sm text-red-400">
-                                    {errors.images.message}
+                                    {errors.images.message.toString()}
                                 </p>
                             )}
 
