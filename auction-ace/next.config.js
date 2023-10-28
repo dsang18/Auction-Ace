@@ -19,7 +19,7 @@ const nextConfig = {
             },
             {
                 protocol: 'https',
-                hostname: 'api.unsplash.com'
+                hostname: 'res.cloudinary.com'
             }
         ],
     },

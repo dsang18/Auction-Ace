@@ -11,6 +11,7 @@ type Props = {
     seller: string;
     price: number;
     desc: string;
+    images: string;
 };
 
 export default async function Product_Details(props: Props) {
@@ -20,9 +21,9 @@ export default async function Product_Details(props: Props) {
         throw new Error('Something Went Wrong! Please try again');
     }
     return (
-        <div className="flex items-center justify-center p-2 flex-wrap w-full md:justify-start">
+        <div className="flex items-center justify-center p-2 px-16 flex-wrap w-full md:justify-start">
             <div className="flex items-center justify-between p-2 w-full md:w-1/2">
-                <div className="flex items-center justify-around p-2 flex-col w-1/3 sm:w-1/3">
+                {/* <div className="flex items-center justify-around p-2 flex-col w-1/3 sm:w-1/3">
                     <Image
                         src={prod_img1}
                         alt="Product"
@@ -38,11 +39,13 @@ export default async function Product_Details(props: Props) {
                         alt="Product"
                         className="my-2 w-full"
                     ></Image>
-                </div>
+                </div> */}
                 <Image
-                    src={prod_img1}
+                    src={props.images}
                     alt="Product"
-                    className="my-2 w-2/3 sm:w-2/3"
+                    className="my-2 w-2/3 sm:w-2/3 h-80 object-cover"
+                    width={400}
+                    height={400}
                 ></Image>
             </div>
 
@@ -57,7 +60,7 @@ export default async function Product_Details(props: Props) {
                 </p>
                 <Link
                     href={'#description'}
-                    className="underline font-extralight text-sm text-gray-700 hover:text-black"
+                    className="underline underline-offset-2 font-extralight text-sm text-gray-700 hover:text-black"
                 >
                     Know More
                 </Link>
@@ -95,9 +98,9 @@ export default async function Product_Details(props: Props) {
                     <button className="bg-[#e3af46] py-1 text-center text-lg rounded-md px-4">
                         Description
                     </button>
-                    <button className="bg-slate-50 border-[1.5px] border-gray-500 py-1 text-center text-lg rounded-md px-4">
+                    {/* <button className="bg-slate-50 border-[1.5px] border-gray-500 py-1 text-center text-lg rounded-md px-4">
                         Bidding History
-                    </button>
+                    </button> */}
                 </div>
 
                 {/* Description subsection */}

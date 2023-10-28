@@ -31,6 +31,7 @@ export default async function Products({ params: { id } }: Params) {
                 seller={prodDetails.seller}
                 price={prodDetails.initialBid}
                 desc={prodDetails.description}
+                images={prodDetails.images}
             />
         </div>
     );

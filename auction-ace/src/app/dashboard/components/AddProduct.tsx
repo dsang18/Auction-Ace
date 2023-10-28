@@ -1,5 +1,6 @@
-import { LegacyRef, useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
+import { BsFillCheckCircleFill } from "react-icons/bs";
 // import fs from 'fs';
 
 // export default function AddProduct() {
@@ -52,6 +53,7 @@ type AddProductInput = z.infer<typeof AddProductFormDataSchemaClient>;
 export default function AddProduct(props: Props) {
     const [success, setSuccess] = useState(false);
     const [SelectedFile, setSelectedFile] = useState<File>();
+    const [verified, setVerified] = useState(false);
 
     const {
         register,
@@ -73,6 +75,7 @@ export default function AddProduct(props: Props) {
 
             setSelectedFile(file);
             console.log(SelectedFile);
+            setVerified(true)
         }
         console.log("End of CustomOnChange");
     };
@@ -127,6 +130,7 @@ export default function AddProduct(props: Props) {
             return;
         }
 
+        setVerified(false);
         reset();
         setSuccess(true);
     };
@@ -328,6 +332,12 @@ export default function AddProduct(props: Props) {
                                     onChange={customOnChangeHandler}
                                 />
                             </label>
+                            {verified && (
+                                <div className='flex gap-1 items-center py-1'>
+                                    <BsFillCheckCircleFill color={'#15803D'} />
+                                    <p className='text-sm font-medium text-green-700'>Verified</p>
+                                </div>
+                            )}
                             {errors.images?.message && (
                                 <p className="text-sm text-red-400">
                                     {errors.images.message.toString()}

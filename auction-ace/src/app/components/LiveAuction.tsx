@@ -67,18 +67,18 @@ export default async function LiveAuction() {
                     <div key={item.id} className="flex items-start m-3 border border-gray-300 rounded-md flex-col w-full">
                         <Image
                             // src="/_next/static/media/USPA_white_shoes.77c6ce22.png"
-                            src={shoes}
+                            src={item.images}
                             alt="Shoes"
-                            className="rounded-sm"
+                            className="rounded-sm h-64 object-cover"
                             width={500}
                             height={500}
                         />
 
-                        <div className="flex items-start p-2 flex-col my-2">
+                        <div className="flex items-start pt-2 pb-4 px-4 flex-col my-2">
                             <h3 className="text-lg font-semibold text-start">
                                 {item.itemName}
                             </h3>
-                            <div className="flex items-start">
+                            <div className="flex items-center">
                                 <h3 className="text-md text-gray-500">
                                     Bidding Price:
                                 </h3>
@@ -86,9 +86,10 @@ export default async function LiveAuction() {
                                     {item.initialBid}
                                 </h3>
                             </div>
+                            <p className='line-clamp-3 font-extralight text-sm text-gray-600'>{item.description}</p>
                         </div>
                         {/* Buttons */}
-                        <div className="flex items-center justify-around w-full pb-4">
+                        <div className="flex items-center justify-around w-full pb-4 mb-4">
                             {/* href="/single_product" */}
                             <Link href={`/products/${item.id}`} className="text-md w-2/5 text-gray-900 px-2 py-1 rounded-md font-medium bg-[#E3AF46]">
                                 Place Bid
