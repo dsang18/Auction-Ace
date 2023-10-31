@@ -2,6 +2,7 @@
 import ComponentTree from './components/ComponentTree';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { redirect } from 'next/navigation';
+import YourProduct from './components/YourProduct';
 
 export default async function SellerDashboard() {
     const { getUser, getPermission } = getKindeServerSession();
@@ -16,8 +17,10 @@ export default async function SellerDashboard() {
                     {/* <Navbar /> */}
                     <ComponentTree
                         userId={user.id}
-                        userName={user.given_name+" "+user.family_name}
-                    />
+                        userName={user.given_name + ' ' + user.family_name}
+                    >
+                        <YourProduct userId={user.id} />
+                    </ComponentTree>
                 </main>
             ) : (
                 // alert("You don't have access to Dashboard")
