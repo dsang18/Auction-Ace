@@ -19,7 +19,7 @@ model Item {
     AuctionEndTime DateTime
     seller         String
     sellerId       String
-    biddingHistory Bid[]
+    // biddingHistory Bid[]
 }
 
 model Bid {
@@ -28,8 +28,11 @@ model Bid {
     bidderId  String
     amount    Float
     timestamp DateTime @default(now())
-    Item      Item?    @relation(fields: [itemId], references: [id])
-    itemId    String?  @db.ObjectId
+    sellerId  String
+    // Item      Item?    @relation(fields: [itemId], references: [id])
+    // itemId    String?  @db.ObjectId
+    item      String
+    itemId    String
 }
 
 model Category {

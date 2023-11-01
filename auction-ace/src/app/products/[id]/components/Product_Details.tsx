@@ -9,6 +9,7 @@ type Props = {
     prodId: string;
     name: string;
     seller: string;
+    sellerId: string;
     price: number;
     desc: string;
     images: string;
@@ -83,6 +84,8 @@ export default async function Product_Details(props: Props) {
                         access={getPermission('dashboard:access').isGranted}
                         userId={user.id}
                         userName={user.given_name+" "+user.family_name}
+                        sellerId={props.sellerId}
+                        prodName={props.name}
                         prodId={props.prodId}
                         price={props.price}
                     />

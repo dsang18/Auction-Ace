@@ -29,6 +29,7 @@ export default async function Products({ params: { id } }: Params) {
                 prodId={id}
                 name={prodDetails.itemName}
                 seller={prodDetails.seller}
+                sellerId={prodDetails.sellerId}
                 price={prodDetails.initialBid}
                 desc={prodDetails.description}
                 images={prodDetails.images}

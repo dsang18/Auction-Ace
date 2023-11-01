@@ -36,9 +36,10 @@ export default async function LiveAuction() {
 
     // console.log(prod_details);
 
-    const itemDetails = await prisma.item.findMany({
-        take: 4,
-    });
+    // const itemDetails = await prisma.item.findMany({
+    //     take: 4,
+    // });
+    const itemDetails = await prisma.item.findMany();
 
     // console.log(itemDetails);
 
@@ -110,13 +111,13 @@ export default async function LiveAuction() {
                     </Link>
                 ))} */}
             </div>
-            <div id="ViewMoreDiv"></div>
+            {/* <div id="ViewMoreDiv"></div>
             <div className="flex items-center justify-center w-full pb-4">
                 <button className="text-lg text-gray-900 px-4 py-1 rounded-md font-medium bg-[#E3AF46] flex flex-row items-center">
                     View More
                     <AiOutlineDown className="text-md mt-1 ml-2" />
                 </button>
-            </div>
+            </div> */}
         </div>
     );
 }

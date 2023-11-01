@@ -14,6 +14,8 @@ type Props = {
     prodId: string;
     userId: string;
     userName: string;
+    sellerId: string;
+    prodName: string;
     price: number;
 };
 
@@ -73,6 +75,10 @@ export default function BidForm(props: Props) {
 
                 <input type="hidden" value={props.userName} {...register('userName')} />
 
+                <input type="hidden" value={props.sellerId} {...register('sellerId')} />
+
+                <input type="hidden" value={props.prodName} {...register('prodName')} />
+
                 {props.access ? (
                     <button
                         disabled
@@ -95,6 +101,12 @@ export default function BidForm(props: Props) {
                 )}
                 {errors.userName?.message && (
                     <p className="text-sm text-red-400">{errors.userName.message}</p>
+                )}
+                {errors.sellerId?.message && (
+                    <p className="text-sm text-red-400">{errors.sellerId.message}</p>
+                )}
+                {errors.prodName?.message && (
+                    <p className="text-sm text-red-400">{errors.prodName.message}</p>
                 )}
             </form>
             {/* {success && (

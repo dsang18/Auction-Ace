@@ -14,6 +14,12 @@ export const BidFormDataSchema = z.object({
     userName: z.string({
         invalid_type_error: 'typeError: userName must be string',
     }),
+    sellerId: z.string({
+        invalid_type_error: "typeError: sellerId must be string",
+    }),
+    prodName: z.string({
+        invalid_type_error: "typeError: prodName must be string",
+    })
 });
 
 const ACCEPTED_IMAGE_TYPES = [

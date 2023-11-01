@@ -5,7 +5,6 @@ import React, { useState } from 'react';
 // Section Components
 import Dashboard from './Dashboard';
 import AddProduct from './AddProduct';
-import AllPurchases from './AllPurchases';
 import Jumbotron from '@/app/components/Jumbotron';
 
 
@@ -50,23 +49,13 @@ export default function ComponentTree(props: Props) {
                 </button>
                 <button
                     className={
-                        displayComponent === 'Order Bidding'
+                        displayComponent === 'Your Products'
                             ? `bg-amber-400 text-white border-0 text-md px-2 py-1 text-center text-lg rounded-lg my-2 w-2/5 lg:m-2 lg:w-1/5`
                             : `text-md bg-slate-50 border-[1.5px] border-gray-500 px-2 py-1 text-center text-lg rounded-lg my-2 w-2/5 lg:m-2 lg:w-1/5`
                     }
-                    onClick={() => handleButtonClick('Order Bidding')}
+                    onClick={() => handleButtonClick('Your Products')}
                 >
-                    Order Bidding
-                </button>
-                <button
-                    className={
-                        displayComponent === 'Purchases'
-                            ? `bg-amber-400 text-white border-0 text-md px-2 py-1 text-center text-lg rounded-lg my-2 w-2/5 lg:m-2 lg:w-1/5`
-                            : `text-md bg-slate-50 border-[1.5px] border-gray-500 px-2 py-1 text-center text-lg rounded-lg my-2 w-2/5 lg:m-2 lg:w-1/5`
-                    }
-                    onClick={() => handleButtonClick('Purchases')}
-                >
-                    Purchases
+                    My Products
                 </button>
             </div>
 
@@ -75,11 +64,10 @@ export default function ComponentTree(props: Props) {
             {displayComponent === 'Sell Product' && <AddProduct userId={props.userId} userName={props.userName} />}
             {/* {displayComponent === 'Order Bidding' && <YourProducts userId={props.userId}><YourProductChild userId={props.userId} /></YourProducts>} */}
             {/* {displayComponent === 'Order Bidding' && {props.children}} */}
-            {displayComponent === 'Order Bidding' ? props.children : null}
+            {displayComponent === 'Your Products' ? props.children : null}
             {/* <div className='hidden'>
                 {props.children}
             </div> */}
-            {displayComponent === 'Purchases' && <AllPurchases userId={props.userId} />}
         </section>
     );
 }

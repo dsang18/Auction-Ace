@@ -6,11 +6,26 @@ type Props = {
 };
 
 export default async function YourProductChild(props: Props) {
-    const products = await prisma.item.findMany({
+    // const products = await prisma.bid.groupBy({
+    //     by: ['itemId'],
+    //     where: {
+    //       sellerId: props.userId,
+    //     },
+    //     _max: {
+    //       amount: true,
+    //     }
+    //   });
+
+    const products = await prisma.bid.findMany({
         where: {
-            sellerId: props.userId
-        }
-    })
+          sellerId: props.userId,
+        },
+        orderBy: {
+            amount: 'desc'
+        },
+        distinct: ['item']
+      });
+      
     return (
         <div className="flex items-center justify-center w-full p-2">
             <table className="w-full px-3 py-2 mx-auto md:w-4/5 md:m-5">
@@ -20,27 +35,29 @@ export default async function YourProductChild(props: Props) {
                             Bidding ID
                         </th>
                         <th className="text-sm md:text-lg text-center text-slate-50 bg-[#805D5D] font-normal">
-                            Bidding Amount
+                            Product Name
                         </th>
                         <th className="text-sm md:text-lg text-center text-slate-50 bg-[#805D5D] font-normal">
                             Highest Bid
                         </th>
                         <th className="text-sm md:text-lg text-center text-slate-50 bg-[#805D5D] font-normal">
-                            Status
+                            Bid Time
                         </th>
-                        <th className="text-sm md:text-lg text-center text-slate-50 bg-[#805D5D] font-normal">
+                        {/* <th className="text-sm md:text-lg text-center text-slate-50 bg-[#805D5D] font-normal">
                             Action
-                        </th>
+                        </th> */}
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td className="text-sm md:text-lg text-center">None</td>
-                        <td className="text-sm md:text-lg text-center">None</td>
-                        <td className="text-sm md:text-lg text-center">None</td>
-                        <td className="text-sm md:text-lg text-center">None</td>
-                        <td className="text-sm md:text-lg text-center">None</td>
-                    </tr>
+                    {products.map((items) => (
+                        <tr key={items.id}>
+                            <td className="text-sm md:text-lg text-center">{items.id}</td>
+                            <td className="text-sm md:text-lg text-center">{items.item}</td>
+                            <td className="text-sm md:text-lg text-center">{items.amount}</td>
+                            <td className="text-sm md:text-lg text-center">{items.timestamp.getDay() + '/' + items.timestamp.getMonth() + '/' + items.timestamp.getFullYear()}</td>
+                            {/* <td className="text-sm md:text-lg text-center">None</td> */}
+                        </tr>
+                    ))}
                 </tbody>
             </table>
         </div>

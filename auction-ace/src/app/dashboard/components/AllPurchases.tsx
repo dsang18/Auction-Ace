@@ -1,10 +1,15 @@
-import React from 'react';
+import prisma from "@/lib/prisma";
 
 type Props = {
     userId: string;
 }
 
-export default function AllPurchases(props: Props) {
+export default async function AllPurchases(props: Props) {
+    const purchaseData = await prisma.bid.findMany({
+        where: {
+            bidderId: props.userId
+        }
+    });
     return (
         <section>
             <div className="flex items-center justify-center w-full p-2">
@@ -15,23 +20,25 @@ export default function AllPurchases(props: Props) {
                                 Bidding ID
                             </th>
                             <th className="text-center text-slate-50 bg-[#805D5D] font-normal">
-                                Bidding Amount
+                                Bidding Item
                             </th>
                             <th className="text-center text-slate-50 bg-[#805D5D] font-normal">
-                                Status
+                                Amount
                             </th>
                             <th className="text-center text-slate-50 bg-[#805D5D] font-normal">
-                                Action
+                                Time
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td className="text-center">None</td>
-                            <td className="text-center">None</td>
-                            <td className="text-center">None</td>
-                            <td className="text-center">None</td>
-                        </tr>
+                        {purchaseData.map((item) => (
+                            <tr key={item.id}>
+                            <td className="text-center">{item.id}</td>
+                            <td className="text-center">{item.item}</td>
+                            <td className="text-center">{item.amount}</td>
+                            <td className="text-center">{item.timestamp.getDate() + '/' + item.timestamp.getMonth() + '/' + item.timestamp.getFullYear()}</td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>

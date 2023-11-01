@@ -18,7 +18,9 @@ export async function addEntry(data: Inputs) {
                 bidder: result.data.userName,
                 bidderId: result.data.userId,
                 amount: parseInt(result.data.bid),
-                itemId: result.data.prodId
+                itemId: result.data.prodId,
+                sellerId: result.data.sellerId,
+                item: result.data.prodName
             }
         })
         revalidatePath('/products')

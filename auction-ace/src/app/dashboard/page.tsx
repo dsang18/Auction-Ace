@@ -3,6 +3,8 @@ import ComponentTree from './components/ComponentTree';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { redirect } from 'next/navigation';
 import YourProduct from './components/YourProduct';
+import AllPurchases from './components/AllPurchases';
+import Jumbotron from '@/app/components/Jumbotron';
 
 export default async function SellerDashboard() {
     const { getUser, getPermission } = getKindeServerSession();
@@ -23,8 +25,10 @@ export default async function SellerDashboard() {
                     </ComponentTree>
                 </main>
             ) : (
-                // alert("You don't have access to Dashboard")
-                redirect('/landingPage')
+                <main>
+                    <Jumbotron section_name1='Home' section_name2='All Purchases' />
+                    <AllPurchases userId={user.id} />
+                </main>
             )}
         </>
     );
