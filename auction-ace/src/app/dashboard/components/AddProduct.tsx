@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { BsFillCheckCircleFill } from "react-icons/bs";
+import { BsFillCheckCircleFill, BsXCircleFill } from 'react-icons/bs';
 // import fs from 'fs';
 
 // export default function AddProduct() {
@@ -65,21 +65,21 @@ export default function AddProduct(props: Props) {
         // resolver: zodResolver(AddProductFormDataSchemaClient),
     });
 
-    const customOnChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-        console.log("Entered CustomOnchange");
-          
+    const customOnChangeHandler = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        console.log('Entered CustomOnchange');
+
         if (event.target.files) {
-            console.log("Entered If");
-            
+            console.log('Entered If');
+
             const file = event.target.files[0];
 
             setSelectedFile(file);
-            console.log(SelectedFile);
-            setVerified(true)
         }
-        console.log("End of CustomOnChange");
+        console.log('End of CustomOnChange');
     };
-    
+
     // const inputRef = register('images', {
     //     onChange: customOnChangeHandler,
     // });
@@ -101,7 +101,6 @@ export default function AddProduct(props: Props) {
 
         const UPLOAD_URL = `https://bBERTT2zFbCI-5a8Kaarun3XuOQ:375535683849763@api.cloudinary.com/v1_1/drv5m7snk/upload`;
 
-
         // Make a POST request to the Cloudinary upload URL with the FormData object
 
         return axios.post(UPLOAD_URL, formData).then((response) => {
@@ -109,12 +108,64 @@ export default function AddProduct(props: Props) {
         });
     };
 
+    const query = (images: string) => {
+        const data = images;
+        return axios
+            .post(
+                'https://api-inference.huggingface.co/models/google/vit-base-patch16-224',
+                data,
+                {
+                    headers: {
+                        Authorization:
+                            'Bearer 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',
+                    },
+                }
+            )
+            .then((response) => {
+                return response.data;
+            });
+    };
+
     const processForm: SubmitHandler<AddProductInput> = async (data) => {
         const image_url = await uploadImageToCloudinary(SelectedFile);
 
+        const checkImage = await query(image_url);
+        let possible_outcomes = new Array();
+        for (let i = 0; i < checkImage.length; i++) {
+            possible_outcomes = possible_outcomes.concat(
+                checkImage[i].label.split(' ')
+            );
+        }
+        const lowerCasePossibleOutcomes = possible_outcomes.map(item => item.toLowerCase())
+        console.log(lowerCasePossibleOutcomes);
+        
+        const watchName = data.prodName.toLowerCase()
+
+        const nameArray = watchName.split(" ")
+        console.log(" ");
+        console.log(nameArray);
+        
+        
+
+        if (lowerCasePossibleOutcomes.some(element => nameArray.includes(element))) {
+            console.log(true);
+            return ''
+            setVerified(true);
+        } else {
+            return (
+                console.log(false)
+                // <div className="flex gap-1 items-center py-1">
+                //     <BsXCircleFill color={'#B9261C'} />
+                //     <p className="text-sm font-medium text-red-700">
+                //         Image doesn't match the name. Upload another image
+                //     </p>
+                // </div>
+            );
+        }
+
         console.log(image_url);
 
-        data.images = image_url
+        data.images = image_url;
 
         // @ts-ignore
         const result = await addProduct(data);
@@ -333,10 +384,19 @@ export default function AddProduct(props: Props) {
                                 />
                             </label>
                             {verified && (
-                                <div className='flex gap-1 items-center py-1'>
+                                <div className="flex gap-1 items-center py-1">
                                     <BsFillCheckCircleFill color={'#15803D'} />
-                                    <p className='text-sm font-medium text-green-700'>Verified</p>
+                                    <p className="text-sm font-medium text-green-700">
+                                        Verified
+                                    </p>
                                 </div>
+                            // ) : (
+                            //     <div className="flex gap-1 items-center py-1">
+                            //         <BsXCircleFill color={'#B9261C'} />
+                            //         <p className="text-sm font-medium text-red-700">
+                            //             Unverified
+                            //         </p>
+                            //     </div>
                             )}
                             {errors.images?.message && (
                                 <p className="text-sm text-red-400">
