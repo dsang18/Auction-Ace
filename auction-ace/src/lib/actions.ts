@@ -9,22 +9,42 @@ type Inputs = z.infer<typeof BidFormDataSchema>;
 
 type AddProductInput = z.infer<typeof AddProductFormDataSchemaServer>;
 
+
+export async function getHighestBid(prod_id:string){
+    const response = await prisma.bid.findMany({
+        where: {
+            itemId: prod_id
+        },
+        orderBy: {
+            amount: "desc"
+          },
+          take: 1
+    })
+    return response[0].amount
+}
+
+
 export async function addEntry(data: Inputs) {
     const result = BidFormDataSchema.safeParse(data);
 
     if (result.success) {
-        await prisma.bid.create({
-            data: {
-                bidder: result.data.userName,
-                bidderId: result.data.userId,
-                amount: parseInt(result.data.bid),
-                itemId: result.data.prodId,
-                sellerId: result.data.sellerId,
-                item: result.data.prodName
-            }
-        })
-        revalidatePath('/products')
-        return { success: true, data: result.data };
+        if(parseInt(result.data.bid)>await getHighestBid(result.data.prodId)){
+            await prisma.bid.create({
+                data: {
+                    bidder: result.data.userName,
+                    bidderId: result.data.userId,
+                    amount: parseInt(result.data.bid),
+                    itemId: result.data.prodId,
+                    sellerId: result.data.sellerId,
+                    item: result.data.prodName
+                }
+            })
+            revalidatePath('/products')
+            return { success: true, data: result.data };
+        }
+        else{
+            return { success: false, error: "The bid should be greater than the highest bid" }
+        }
     }
 
     if (result.error) {

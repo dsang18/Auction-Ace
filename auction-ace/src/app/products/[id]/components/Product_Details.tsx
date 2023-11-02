@@ -4,6 +4,7 @@ import Reviews from '../../../components/Reviews';
 import BidForm from './BidForm';
 import Link from 'next/link';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
+import { getHighestBid } from '@/lib/actions';
 
 type Props = {
     prodId: string;
@@ -18,6 +19,9 @@ type Props = {
 export default async function Product_Details(props: Props) {
     const { getUser, getPermission } = getKindeServerSession();
     const user = await getUser();
+    const highbid = await getHighestBid(props.prodId)
+    
+
     if (user.given_name === null || user.id === null || user.family_name === null) {
         throw new Error('Something Went Wrong! Please try again');
     }
@@ -77,6 +81,9 @@ export default async function Product_Details(props: Props) {
                     </p>
                     <p className="text-md text-gray-900">
                         Bid Multiple: ₹100.00
+                    </p>
+                    <p className="text-md text-gray-900">
+                        Top Bid: ₹{highbid}
                     </p>
                     <hr className="w-1/3 bg-gray-900 my-4 h-[0.1rem]"></hr>
 
