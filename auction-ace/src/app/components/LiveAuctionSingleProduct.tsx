@@ -6,6 +6,7 @@ type Props = {
     name: string;
     image: string;
     price: number;
+    endTime: string;
     desc: string;
 };
 

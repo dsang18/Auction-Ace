@@ -5,34 +5,39 @@ import LiveAuctionSingleProduct from './LiveAuctionSingleProduct';
 import Link from 'next/link';
 import prisma from '@/lib/prisma';
 import Image from 'next/image';
+import ProductBidTime from './ProductBidTime';
 
 export default async function LiveAuction() {
-    let prod_details = [
-        {
-            id: 1,
-            prod_name: 'Black and White Shoes',
-            prod_image: shoes.src,
-            prod_bid_price: 89.0,
-        },
-        {
-            id: 2,
-            prod_name: 'Black and White Shoes',
-            prod_image: shoes2.src,
-            prod_bid_price: 89.0,
-        },
-        {
-            id: 3,
-            prod_name: 'Black and White Shoes',
-            prod_image: shoes.src,
-            prod_bid_price: 89.0,
-        },
-        {
-            id: 4,
-            prod_name: 'Black and White Shoes',
-            prod_image: shoes.src,
-            prod_bid_price: 89.0,
-        },
-    ];
+
+    
+
+
+    // let prod_details = [
+    //     {
+    //         id: 1,
+    //         prod_name: 'Black and White Shoes',
+    //         prod_image: shoes.src,
+    //         prod_bid_price: 89.0,
+    //     },
+    //     {
+    //         id: 2,
+    //         prod_name: 'Black and White Shoes',
+    //         prod_image: shoes2.src,
+    //         prod_bid_price: 89.0,
+    //     },
+    //     {
+    //         id: 3,
+    //         prod_name: 'Black and White Shoes',
+    //         prod_image: shoes.src,
+    //         prod_bid_price: 89.0,
+    //     },
+    //     {
+    //         id: 4,
+    //         prod_name: 'Black and White Shoes',
+    //         prod_image: shoes.src,
+    //         prod_bid_price: 89.0,
+    //     },
+    // ];
 
     // console.log(prod_details);
 
@@ -40,7 +45,7 @@ export default async function LiveAuction() {
     //     take: 4,
     // });
     const itemDetails = await prisma.item.findMany();
-
+    
     // console.log(itemDetails);
 
     // const itemDetails = await prisma.item.findMany({ take: 10 })
@@ -79,6 +84,13 @@ export default async function LiveAuction() {
                             <h3 className="text-lg font-semibold text-start">
                                 {item.itemName}
                             </h3>
+                            <div className="flex items-center">
+                            <h3 className="text-md text-gray-500">
+                                    Time Left:
+                                </h3>
+                            <ProductBidTime endTime={item.AuctionEndTime}/>
+                            </div>
+                            
                             <div className="flex items-center">
                                 <h3 className="text-md text-gray-500">
                                     Bidding Price:
