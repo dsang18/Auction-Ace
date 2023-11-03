@@ -13,8 +13,8 @@ import collage from 'public/collage.png';
 
 export default function Jumbotron(props: Props) {
     return (
-        <section>
-            <div className="w-full h-52 md:h-60 lg:h-1/6 bg-[#805D5D] overflow-hidden flex items-center justify-between p-5">
+
+            <div className="w-full h-1/5 lg:h-1/2 bg-[#805D5D] overflow-hidden flex items-center justify-between p-5">
                 <div className="flex items-start justify-center flex-col p-4">
                     <div className=" ps-5 text-lg sm:text-md lg:text-4xl text-slate-50 whitespace-nowrap">
                         {props.section_name1}
@@ -36,6 +36,6 @@ export default function Jumbotron(props: Props) {
                     ></Image>
                 </div>
             </div>
-        </section>
+        
     );
 }

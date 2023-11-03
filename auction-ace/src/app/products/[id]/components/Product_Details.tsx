@@ -26,8 +26,8 @@ export default async function Product_Details(props: Props) {
         throw new Error('Something Went Wrong! Please try again');
     }
     return (
-        <div className="flex items-center justify-center p-2 px-16 flex-wrap w-full md:justify-start">
-            <div className="flex items-center justify-between p-2 w-full md:w-1/2">
+        <div className="flex items-center justify-center px-8 py-2 md:px-16  flex-wrap w-full md:justify-start">
+            <div className="flex items-center justify-center md:justify-between p-2 w-full md:w-1/2">
                 {/* <div className="flex items-center justify-around p-2 flex-col w-1/3 sm:w-1/3">
                     <Image
                         src={prod_img1}
@@ -48,7 +48,7 @@ export default async function Product_Details(props: Props) {
                 <Image
                     src={props.images}
                     alt="Product"
-                    className="my-2 w-2/3 sm:w-2/3 h-80 object-cover"
+                    className="my-2 w-full md:w-2/3 object-cover"
                     width={400}
                     height={400}
                 ></Image>

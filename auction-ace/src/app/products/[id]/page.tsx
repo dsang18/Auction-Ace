@@ -19,7 +19,7 @@ export default async function Products({ params: { id } }: Params) {
         throw new Error("Something Went Wrong! Please try again")
     }
     return (
-        <div className="w-screen h-screen overflow-x-hidden">
+        <div className="max-w-screen h-screen">
             {/* <Navbar /> */}
             <Jumbotron
                 section_name1={'Auction Details'}

@@ -24,7 +24,6 @@ export default function ProductBidTime(props:any) {
 
     setInterval(TimeLeft,1000)
 
-
   return (
     <div>
       <h3 className="text-lg font-semibold text-start">

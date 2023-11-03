@@ -25,7 +25,7 @@ export default async function SellerDashboard() {
                     </ComponentTree>
                 </main>
             ) : (
-                <main>
+                <main className=' h-screen'>
                     <Jumbotron section_name1='Home' section_name2='All Purchases' />
                     <AllPurchases userId={user.id} />
                 </main>
