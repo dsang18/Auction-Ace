@@ -22,7 +22,6 @@ type Props = {
 type Inputs = z.infer<typeof BidFormDataSchema>;
 
 export default function BidForm(props: Props) {
-    const [success, setSuccess] = useState(false);
 
     const {
         register,
@@ -38,7 +37,7 @@ export default function BidForm(props: Props) {
         const result = await addEntry(data);
 
         if (!result) {
-            console.log('Something went wrong');
+            toast.error('Something went wrong');
             return;
         }
 
@@ -48,8 +47,8 @@ export default function BidForm(props: Props) {
             return;
         }
 
+        toast.success('Bid Placed :)')
         reset();
-        setSuccess(true);
     };
 
     return (
@@ -66,7 +65,7 @@ export default function BidForm(props: Props) {
                     {...register('bid')}
                 />
                 {errors.bid?.message && (
-                    <p className="text-sm text-red-400">{errors.bid.message}</p>
+                    toast.error(errors.bid.message)
                 )}
 
                 <input
@@ -100,54 +99,35 @@ export default function BidForm(props: Props) {
                 />
 
                 {props.access ? (
-                    <button
-                        disabled
-                        className="bg-[#e3af46] px-2 py-1 text-center text-lg rounded-lg w-1/3 mx-2 font-semibold disabled:opacity-75"
-                    >
-                        Place Bid
-                    </button>
+                        <button
+                            disabled
+                            title='You need to be a Buyer to Bid'
+                            className="bg-[#e3af46] px-2 py-1 text-center text-lg rounded-lg w-1/3 mx-2 font-semibold disabled:opacity-75"
+                            >
+                            Place Bid
+                        </button>
                 ) : (
                     <button className="bg-[#e3af46] px-2 py-1 text-center text-lg rounded-lg w-1/3 mx-2 font-semibold disabled:opacity-75">
                         Place Bid
                     </button>
                 )}
                 {errors.prodId?.message && (
-                    <p className="text-sm text-red-400">
-                        {errors.prodId.message}
-                    </p>
+                    toast.error(errors.prodId.message)
                 )}
                 {errors.userId?.message && (
-                    <p className="text-sm text-red-400">
-                        {errors.userId.message}
-                    </p>
+                    toast.error(errors.userId.message)
                 )}
                 {errors.userName?.message && (
-                    <p className="text-sm text-red-400">
-                        {errors.userName.message}
-                    </p>
+                    toast.error(errors.userName.message)
                 )}
                 {errors.sellerId?.message && (
-                    <p className="text-sm text-red-400">
-                        {errors.sellerId.message}
-                    </p>
+                    toast.error(errors.sellerId.message)
                 )}
                 {errors.prodName?.message && (
-                    <p className="text-sm text-red-400">
-                        {errors.prodName.message}
-                    </p>
+                    toast.error(errors.prodName.message)
                 )}
             </form>
-            {/* {success && (
-                <>
-                    <Toaster
-                        richColors
-                        expand={true}
-                        position="top-center"
-                    />
-                    {toast.success('Bid has been Placed')}
-                    {setSuccess(false)}
-                </>
-            )} */}
+            <Toaster richColors expand={true} />
         </section>
     );
 }

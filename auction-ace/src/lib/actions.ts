@@ -67,6 +67,22 @@ export async function addProduct(data: AddProductInput) {
                 sellerId: result.data.sellerId, 
             }
         })
+        const itemData = await prisma.item.findFirst({
+            where: {
+                itemName: result.data.prodName
+            }
+        })
+        await prisma.bid.create({
+            data: {
+                bidder: result.data.sellerName,
+                bidderId: result.data.sellerId,
+                amount: result.data.price,
+                // @ts-ignore
+                itemId: itemData.id,
+                sellerId: result.data.sellerId,
+                item: result.data.prodName,
+            }
+        })
         revalidatePath('/products')
         console.log("Successful in adding product");
         return { success: true, data: result.data };

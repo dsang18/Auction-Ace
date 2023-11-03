@@ -1,47 +1,12 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { BsFillCheckCircleFill, BsXCircleFill } from 'react-icons/bs';
-// import fs from 'fs';
-
-// export default function AddProduct() {
-//     const [Name, setName] = useState("")
-//     const [Desc, setDesc] = useState("")
-//     const [MinBid, setMinBid] = useState('')
-//     const [BidEndTime, setBidEndTime] = useState('')
-//     const [SelectedImage, setSelectedImage] = useState("")
-//     const [SelectedFile, setSelectedFile] = useState<File>()
-
-// const handleForm = async ()=>{
-//     try{
-//         if (!SelectedFile) return;
-//         const formData = new FormData()
-//         formData.set("myImage", SelectedFile)
-//         formData.set("productName", Name)
-//         formData.set("productDescription", Desc)
-//         formData.set("minimumBid", MinBid)
-//         formData.set("BidEndTime", BidEndTime)
-//         console.log(formData)
-
-//         const {data} = await axios.post("/api/uploadData", formData)
-
-//         // console.log(data)
-//     }
-//     catch(error: any){
-//         console.log(error.response?.data)
-//     }
-
-// }
-
-//   return (
-//     <section>
-//             <div className="flex items-center justify-center p-4 py-3">
-//                 <div className="signUpBox w-full md:w-1/2 h-full flex items-center justify-start border-2 border-[#805D5D] bg-white rounded-lg flex-col">
-// import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { AddProductFormDataSchemaClient } from '@/lib/zodSchema';
 import { addProduct } from '@/lib/actions';
+import { Toaster, toast } from 'sonner';
 
 type Props = {
     userId: string;
@@ -51,9 +16,7 @@ type Props = {
 type AddProductInput = z.infer<typeof AddProductFormDataSchemaClient>;
 
 export default function AddProduct(props: Props) {
-    const [success, setSuccess] = useState(false);
     const [SelectedFile, setSelectedFile] = useState<File>();
-    const [verified, setVerified] = useState(false);
 
     const {
         register,
@@ -80,9 +43,6 @@ export default function AddProduct(props: Props) {
         console.log('End of CustomOnChange');
     };
 
-    // const inputRef = register('images', {
-    //     onChange: customOnChangeHandler,
-    // });
 
     const uploadImageToCloudinary = (file: any) => {
         // Create a FormData object to store the file and other upload parameters
@@ -147,21 +107,12 @@ export default function AddProduct(props: Props) {
         
         
 
-        if (lowerCasePossibleOutcomes.some(element => nameArray.includes(element))) {
-            console.log(true);
-            return ''
-            setVerified(true);
-        } else {
-            return (
-                console.log(false)
-                // <div className="flex gap-1 items-center py-1">
-                //     <BsXCircleFill color={'#B9261C'} />
-                //     <p className="text-sm font-medium text-red-700">
-                //         Image doesn't match the name. Upload another image
-                //     </p>
-                // </div>
-            );
+        if (!lowerCasePossibleOutcomes.some(element => nameArray.includes(element))) {
+            toast.error("The Image doesn't match the Name you have given")
+            return;
         }
+
+        toast.success("Image Verified :)")
 
         console.log(image_url);
 
@@ -171,7 +122,7 @@ export default function AddProduct(props: Props) {
         const result = await addProduct(data);
 
         if (!result) {
-            console.log('Something went wrong');
+            toast.error('Something went wrong :(');
             return;
         }
 
@@ -181,9 +132,7 @@ export default function AddProduct(props: Props) {
             return;
         }
 
-        setVerified(false);
         reset();
-        setSuccess(true);
     };
 
     return (
@@ -206,59 +155,6 @@ export default function AddProduct(props: Props) {
                             id="form"
                             className="flex items-center justify-around flex-col w-100 p-4 disabled:opacity-70"
                         >
-                            {/* inputs for Product Name */}
-
-                            {/* <div className="flex items-start justify-start flex-col w-full md:w-full md:px-2">
-                                    <label className="text-md w-full">
-                                        Product Name
-                                    </label>
-                                    <div className="relative flex items-center w-full">
-                                        <input
-                                            type="text"
-                                            className="w-full pr-1 pl-7 py-1 text-md border-[1.5px] border-[#938f8f] rounded-md"
-                                            placeholder="Product Name"
-                                            name="prodName"
-                                            onChange = {({target})=>{
-                                                setName(target.value)
-                                            }}
-                                        ></input>
-                                    </div>
-                                </div> */}
-
-                            {/* inputs for Product Description */}
-
-                            {/* <div className="flex items-start justify-start flex-col w-full md:w-full md:px-2">
-                                    <label className="text-md">Product Description</label>
-                                    <div className="relative flex items-center w-full">
-                                        <textarea
-                                            className="pr-1 pl-7 py-1 text-md border-[1.5px] border-[#938f8f] rounded-md w-full"
-                                            name="prodDesc"
-                                            placeholder="Product Description"
-                                            onChange = {({target})=>{
-                                                setDesc(target.value)
-                                            }}
-                                        ></textarea>
-                                    </div>
-                                </div> */}
-
-                            {/* input for Minimum Bid */}
-                            {/* <div className="flex items-start justify-start flex-col w-full md:px-2 ">
-                                <label className="text-md">
-                                    Minimum Bid
-                                </label>
-                                <div className="relative flex items-center w-full">
-                                    <input
-                                        type="number"
-                                        className="pr-1 pl-7 py-1 text-md border-[1.5px] border-[#938f8f] rounded-md w-full"
-                                        name="minbid"
-                                        placeholder="Minimum Bid"
-                                        onChange = {({target})=>{
-                                            setMinBid(target.value)
-                                        }}
-                                    ></input>
-                                </div>
-                            </div> */}
-
                             <label className="text-md w-full">
                                 Product Name
                                 <input
@@ -269,9 +165,7 @@ export default function AddProduct(props: Props) {
                                 />
                             </label>
                             {errors.prodName?.message && (
-                                <p className="text-sm text-red-400">
-                                    {errors.prodName.message}
-                                </p>
+                                toast.error(errors.prodName.message)
                             )}
 
                             {/* inputs for Product Description */}
@@ -284,9 +178,7 @@ export default function AddProduct(props: Props) {
                                 />
                             </label>
                             {errors.description?.message && (
-                                <p className="text-sm text-red-400">
-                                    {errors.description.message}
-                                </p>
+                                toast.error(errors.description.message)
                             )}
 
                             {/* input for Minimum Bid */}
@@ -302,9 +194,7 @@ export default function AddProduct(props: Props) {
                                 />
                             </label>
                             {errors.price?.message && (
-                                <p className="text-sm text-red-400">
-                                    {errors.price.message}
-                                </p>
+                                toast.error(errors.price.message)
                             )}
 
                             <label className="text-md w-full mt-6">
@@ -319,27 +209,9 @@ export default function AddProduct(props: Props) {
                                 />
                             </label>
                             {errors.auctionEndTime?.message && (
-                                <p className="text-sm text-red-400">
-                                    {errors.auctionEndTime.message}
-                                </p>
+                                toast.error(errors.auctionEndTime.message)
                             )}
 
-                            {/* <div className="flex items-start justify-start flex-col w-full md:px-2 ">
-                                <label className="text-md">
-                                    Bid End Time
-                                </label>
-                                <div className="relative flex items-center w-full">
-                                    <input
-                                        type="datetime-local"
-                                        className="pr-1 pl-7 py-1 text-md border-[1.5px] border-[#938f8f] rounded-md w-full"
-                                        name="bidtime"
-                                        placeholder="Bid Time"
-                                        onChange = {({target})=>{
-                                            setBidEndTime(target.value)
-                                        }}
-                                    ></input>
-                                </div>
-                            </div> */}
                             {/* <label className="text-md w-full mt-6">
                                 Invoice or bill
                                 <input
@@ -352,28 +224,6 @@ export default function AddProduct(props: Props) {
 
                             <label className="text-md w-full mt-6">
                                 Product Image
-                                {/* <input
-                                    type="file"
-                                    className="pr-1 pl-7 py-1 text-md border-[1.5px] border-[#938f8f] rounded-md w-full"
-                                    placeholder="Image"
-                                    {...register('images')}
-                                /> */}
-                                {/* <input
-                                    type="text"
-                                    className="w-full pr-1 pl-7 py-1 text-md border-[1.5px] border-[#938f8f] rounded-md"
-                                    placeholder="Image Path"
-                                    {...register('images')}
-                                /> */}
-                                {/* <input
-                                    type="file"
-                                    className="pr-1 pl-7 py-1 text-md border-[1.5px] border-[#938f8f] rounded-md w-full"
-                                    // name="prodImage"
-                                    placeholder="Image"
-                                    accept='image/*'
-                                    // @ts-ignore
-                                    ref={inputRef}
-                                    name="images"
-                                /> */}
                                 <input
                                     type="file"
                                     className="pr-1 pl-7 py-1 text-md border-[1.5px] border-[#938f8f] rounded-md w-full"
@@ -383,25 +233,8 @@ export default function AddProduct(props: Props) {
                                     onChange={customOnChangeHandler}
                                 />
                             </label>
-                            {verified && (
-                                <div className="flex gap-1 items-center py-1">
-                                    <BsFillCheckCircleFill color={'#15803D'} />
-                                    <p className="text-sm font-medium text-green-700">
-                                        Verified
-                                    </p>
-                                </div>
-                            // ) : (
-                            //     <div className="flex gap-1 items-center py-1">
-                            //         <BsXCircleFill color={'#B9261C'} />
-                            //         <p className="text-sm font-medium text-red-700">
-                            //             Unverified
-                            //         </p>
-                            //     </div>
-                            )}
                             {errors.images?.message && (
-                                <p className="text-sm text-red-400">
-                                    {errors.images.message.toString()}
-                                </p>
+                                toast.error(errors.images.message.toString())
                             )}
 
                             <input
@@ -410,41 +243,16 @@ export default function AddProduct(props: Props) {
                                 {...register('sellerId')}
                             />
                             {errors.sellerId?.message && (
-                                <p className="text-sm text-red-400">
-                                    {errors.sellerId.message}
-                                </p>
+                                toast.error(errors.sellerId.message)
                             )}
 
-                            {/* <div className="flex items-start justify-start flex-col w-full md:px-2 ">
-                                <label className="text-md">
-                                    Product Image
-                                </label>
-                                <div className="relative flex items-center w-full">
-                                    <input
-                                        type="file"
-                                        className="pr-1 pl-7 py-1 text-md border-[1.5px] border-[#938f8f] rounded-md w-full"
-                                        name="prodImage"
-                                        placeholder="Image"
-                                        onChange = {({target})=>{
-                                            if (target.files){
-                                                const file = target.files[0]
-                                                setSelectedImage(URL.createObjectURL(file))
-                                                setSelectedFile(file)
-                                            }
-                                        }}
-                                    ></input>
-
-                                </div>
-                            </div> */}
                             <input
                                 type="hidden"
                                 value={props.userName}
                                 {...register('sellerName')}
                             />
                             {errors.sellerName?.message && (
-                                <p className="text-sm text-red-400">
-                                    {errors.sellerName.message}
-                                </p>
+                                toast.error(errors.sellerName.message)
                             )}
 
                             <div className="flex items-start justify-start flex-col w-full md:px-2 mt-6">
@@ -453,8 +261,6 @@ export default function AddProduct(props: Props) {
                                 </label>
                             </div>
 
-                            {/* Submit button */}
-                            {/* <button onSubmit={handleForm} className="text-lg text-slate-50 bg-[#E3AF46] px-7 py-2 mt-4 rounded-lg"> */}
                             <button
                                 type="submit"
                                 className="text-lg text-slate-50 bg-[#E3AF46] px-7 py-2 mt-4 rounded-lg"
@@ -465,6 +271,7 @@ export default function AddProduct(props: Props) {
                     </form>
                 </div>
             </div>
+            <Toaster richColors expand={true} />
         </section>
     );
 }
