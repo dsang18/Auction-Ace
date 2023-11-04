@@ -1,20 +1,13 @@
 import React from 'react';
 import prisma from '@/lib/prisma';
+import { RiDeleteBin6Line } from "react-icons/ri";
+import DeleteProduct from './DeleteProduct';
 
 type Props = {
     userId: string;
 };
 
 export default async function YourProductChild(props: Props) {
-    // const products = await prisma.bid.groupBy({
-    //     by: ['itemId'],
-    //     where: {
-    //       sellerId: props.userId,
-    //     },
-    //     _max: {
-    //       amount: true,
-    //     }
-    //   });
 
     const products = await prisma.bid.findMany({
         where: {
@@ -41,11 +34,11 @@ export default async function YourProductChild(props: Props) {
                             Highest Bid
                         </th>
                         <th className="text-sm md:text-lg text-center text-slate-50 bg-[#805D5D] font-normal">
-                            Bid Time
+                            Auction End Time
                         </th>
-                        {/* <th className="text-sm md:text-lg text-center text-slate-50 bg-[#805D5D] font-normal">
-                            Action
-                        </th> */}
+                        <th className="text-sm md:text-lg text-center text-slate-50 bg-[#805D5D] font-normal">
+                            <RiDeleteBin6Line />
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -54,8 +47,8 @@ export default async function YourProductChild(props: Props) {
                             <td className="text-sm md:text-lg text-center">{items.id}</td>
                             <td className="text-sm md:text-lg text-center">{items.item}</td>
                             <td className="text-sm md:text-lg text-center">{items.amount}</td>
-                            <td className="text-sm md:text-lg text-center">{items.timestamp.getDay() + '/' + items.timestamp.getMonth() + '/' + items.timestamp.getFullYear()}</td>
-                            {/* <td className="text-sm md:text-lg text-center">None</td> */}
+                            <td className="text-sm md:text-lg text-center">{items.timestamp.getDay() + '/' + items.timestamp.getMonth() + '/' + items.timestamp.getFullYear() + ' ' + items.timestamp.getHours() + ':' + items.timestamp.getMinutes()}</td>
+                            <td className="text-sm md:text-lg text-center"><DeleteProduct id={items.itemId} /></td>
                         </tr>
                     ))}
                 </tbody>

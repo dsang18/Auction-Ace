@@ -93,3 +93,27 @@ export async function addProduct(data: AddProductInput) {
         return { success: false, error: result.error.format() };
     }
 }
+
+
+export async function removePurchase (id: string) {
+    await prisma.bid.delete({
+        where: {
+            id: id
+        }
+    })
+    return {success:true}
+}
+
+export async function removeProduct (id: string) {
+    await prisma.item.delete({
+        where: {
+            id: id
+        }
+    })
+    await prisma.bid.deleteMany({
+        where: {
+            itemId: id
+        }
+    })
+    return {success:true}
+}
